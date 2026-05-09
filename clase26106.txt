@@ -1,0 +1,103 @@
+Listado de rutas de carpetas
+El número de serie del volumen es 000000D7 1CA3:961B
+C:.
+|   clase26106.txt
+|   ejercicios_bucles_while_clase_05.py
+|   miPrimerCodigo.py
+|   tips.txt
+|   
++---.idea
+|   |   .gitignore
+|   |   26106.iml
+|   |   misc.xml
+|   |   modules.xml
+|   |   vcs.xml
+|   |   workspace.xml
+|   |   
+|   \---inspectionProfiles
+|           profiles_settings.xml
+|           
++---clase_01_py
+|       app.py
+|       app0.py
+|       CLASE1.ipynb
+|       miPrimerCodigo.py
+|       
++---clase_02_py
+|   |   app.py
+|   |   app2.py
+|   |   app3.py
+|   |   poc.py
+|   |   
+|   \---practica
+|           practica.py
+|           praxcticaBabul.py
+|           
++---clase_03_py
+|   |   app.py
+|   |   
+|   \---prractica
+|           practica3.py
+|           
++---clase_04._py
+|   |   app.py
+|   |   poc4.py
+|   |   
+|   \---practica
+|           practica4.py
+|           
++---clase_05_py
+|   |   app.py
+|   |   
+|   \---practica
+|       |   listas.py
+|       |   prueba.py
+|       |   testiing.py
+|       |   
+|       +---00-ORIGINAL_ENUNCIADO
+|       |       ORI_ejercicios_bucles_while_clase_05.py
+|       |       
+|       +---01-SOLUCIONES_POR_MI
+|       |       GUIA_ejercicios_bucles_while_clase_05-RESUELTA.py
+|       |       
+|       +---03_simples_01_all_10
+|       |       poc-simple10.py
+|       |       poc-simple2.py
+|       |       poc-simple3.py
+|       |       poc-simple4.py
+|       |       poc-simple4bis.py
+|       |       poc-simple5.py
+|       |       poc-simple6.py
+|       |       poc-simple6bis.py
+|       |       poc-simple7.py
+|       |       poc-simple8.py
+|       |       poc-simple9.py
+|       |       
+|       \---04_complejos_01_all_10
+|               poc-comlejo10.py
+|               poc-compejo10.bis.py
+|               poc-complejo7bis.py
+|               pocxx_complejoxx.py
+|               poc_complejo1.py
+|               poc_complejo2.py
+|               poc_complejo3.py
+|               poc_complejo4.py
+|               poc_complejo5.py
+|               poc_complejo6.py
+|               poc_complejo7.py
+|               poc_complejo8.py
+|               poc_complejo8bis.py
+|               poc_complejo9.py
+|               
++---clase_06_py
+|       app.py
+|       
++---clase_07_py
+|       app.py
+|       
++---clase_08_py
+|       app.py
+|       
+\---clase_pre_entrega_proyecto
+        pre-entrega_de_proyecto.py
+        

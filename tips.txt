@@ -1,0 +1,12 @@
+
+caracter = 'ñ'
+codigo_punto = ord(caracter)
+print(codigo_punto)  # Imprime 241, que es el código Unicode de 'ñ'
+codigo = 241
+caracter = chr(codigo)
+print(caracter)  # Imprime 'ñ'
+print("")
+print(\n)
+print(.2F)
+print(f"{}")
+input("\nPresioná Enter para volver al menú...")
