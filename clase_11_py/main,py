@@ -1,0 +1,12 @@
+import utilidades 
+productos = []
+opcion =""
+while opcion !=3:
+    print("1 Agregar producto")
+    print("2 Mostar producto")
+    print("3 salir")
+    print("")
+    opcion = input ("ingrese una opcion")
+    if opcion == 1:
+        nombre = utilidades.pedir_texto("ingrese el nombre del producto","el nombre no puede estar vacio")
+        

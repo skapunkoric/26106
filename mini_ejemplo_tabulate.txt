@@ -1,0 +1,74 @@
+# Mini Ejemplo: SQLite3 + Tabulate (Todo en un archivo)
+# Requisito previo en consola: pip install tabulate
+
+import sqlite3
+from tabulate import tabulate
+
+# 1. Crear conexión a la Base de Datos (en memoria para este ejemplo rápido)
+conexion = sqlite3.connect(":memory:")
+cursor = conexion.cursor()
+
+# 2. Crear una mini tabla de ejemplo
+cursor.execute('''
+CREATE TABLE IF NOT EXISTS alumnos (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nombre TEXT NOT NULL,
+    nota REAL NOT NULL
+)
+''')
+conexion.commit()
+
+# 3. Insertar 3 registros de prueba
+estudiantes = [
+    ("Mili", 9.5),
+    ("Rainbow", 8.0),
+    ("Carlos", 7.2)
+]
+
+cursor.executemany("INSERT INTO alumnos (nombre, nota) VALUES (?, ?)", estudiantes)
+conexion.commit()
+
+print("¡Base de datos temporal creada con éxito!")
+print("================================================")
+
+# 4. Hacer una selección (SELECT) de los datos
+cursor.execute("SELECT * FROM alumnos WHERE nota >= 8.0")
+alumnos_destacados = cursor.fetchall()
+
+# 5. Mostrar los resultados usando TABULATE con formato 'grid'
+print("\nALUMNOS CON NOTA MAYOR O IGUAL A 8.0:")
+headers = ["ID", "Nombre Estudiante", "Nota Final"]
+print(tabulate(alumnos_destacados, headers=headers, tablefmt="grid"))
+
+# 6. Cerrar la conexión
+conexion.close()
+---------------------------------------------------------------------------
+ejemplo de mas funciones de tabulete o taburete 
+================================================
+💡 TIPS DE TABULATE (El "Taburete")
+================================================
+Uso básico: 
+from tabulate import tabulate
+print(tabulate(lista_de_datos, headers=titulos, tablefmt="grid"))
+
+--- SÚPER PODERES (Parámetros extra) ---
+
+1. FORMATOS DE EXPORTACIÓN (tablefmt="...")
+- "grid": El mejor para leer en consola.
+- "pipe": Formato Markdown (ideal para GitHub/Readme).
+- "html": Transforma la tabla en código <table> de HTML.
+- "jira": Formato listo para pegar en tickets de Jira.
+
+2. RELLENO DE DATOS FALTANTES (missingval="...")
+- Sirve para que la tabla no se rompa si hay campos vacíos.
+- Ejemplo: missingval="N/A" o missingval="-"
+
+3. REDONDEO DE DECIMALES (floatfmt="...")
+- Formatea todos los números flotantes de la tabla a la vez.
+- Ejemplo: floatfmt=".2f" (Deja todo prolijo con 2 decimales).
+
+4. ALINEACIÓN A MEDIDA (stralign="..." / numalign="...")
+- Fuerza la alineación de textos (str) o números (num).
+- Opciones: "left", "center", "right".
+- Ejemplo: stralign="center", numalign="center"
+================================================

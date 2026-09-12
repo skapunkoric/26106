@@ -1,0 +1,14 @@
+cursor.execute("""
+    CREATE TABLE IF NOT EXISTS clientes (
+        id       INTEGER PRIMARY KEY AUTOINCREMENT,
+        nombre   TEXT NOT NULL,
+        apellido TEXT NOT NULL,
+        correo   TEXT NOT NULL
+    )
+""")
+cursor.execute(
+"""
+    INSERT INTO clientes (nombre, apellido, correo)
+    VALUES (?,?,?)""",
+    ("Ana", "Lopez", "ana.lopez@email.com"),
+)

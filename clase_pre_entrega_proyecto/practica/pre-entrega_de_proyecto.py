@@ -1,4 +1,4 @@
-
+productos = []
 producto = []
 opcion = ""
 
@@ -19,7 +19,7 @@ while opcion != "5":
             print("el nombre no puede estar vacio")
             nombre = input("ingrese el nombre del producto: ")
 
-        categoria = input("ingrese el nombre del producto: ")   
+        categoria = input("ingrese el categoria del producto: ")   
         
         while categoria == "":
             print("la categoria no puede estar vacia")
@@ -33,7 +33,8 @@ while opcion != "5":
         
         precio = int(precio)
         producto = [nombre,categoria,precio]    
-        productos = productos + [producto]
+        #productos = productos + [producto]
+        productos.append(producto)
         print("producto agregado correctamente")
 
     elif opcion == "2":
@@ -71,6 +72,8 @@ while opcion != "5":
                     print("categoria ", producto[1])
                     print("precio $ ",    producto[2])
                     print("-------------------------- ")
+                    print(f"{'N°':<5} {'nombre':<20} {'categoria'<15} {'precio':<10}")
+                    print(f"{numero:<5} {producto[0]:<20} {producto[1]:<15} {producto[2]:<10}")
                     encontrado += 1 
 
                     if encontrado == 0:
@@ -98,18 +101,35 @@ while opcion != "5":
                 print("no existe producto con ese numero")
 
             else:
-                nueva_lista = []   
-                numero = 1
+                #nueva_lista = []   
+                #numero = 1
               
-                for producto in productos: 
-                    if numero != posicion:
-                      nueva_lista = nueva_lista + [productos]
+                #for producto in productos: 
+                #    if numero != posicion:
+                #      nueva_lista = nueva_lista + [productos]
 
-                    numero += 1
+                #    numero += 1
 
-                productos = nueva_lista
+                #productos = nueva_lista
+                #pop()
                 
+                productos.pop(posicion-1)
                 print(" producto eliminado correctamente")
+                
+                #remove
+                #productos_eliminar = productos[producto - 1]
+                #producto.remove(productos_eliminar)
+
+                nombre_eliminar = input("ingrese el nombre del producto para eliminar")
+                encontrado = False
+                for producto in productos:
+                    if producto[0] == nombre_eliminar:
+                        producto.remove(producto)
+                        print("producto eliminado")
+                        break
+                if not encontrado:
+                    print("no se encontro producto para eliminar")    
+
 
     elif opcion == "5":
         print("gracias por usar el sistema")
@@ -117,6 +137,5 @@ while opcion != "5":
 
     else:
       print("opcion invalida. elegi la opcion 1-5")    
-
 
 

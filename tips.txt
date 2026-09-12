@@ -10,3 +10,337 @@ print(\n)
 print(.2F)
 print(f"{}")
 input("\nPresioná Enter para volver al menú...")
+ype() en tu print de DEBUG:
+print(f"DEBUG: {passwordIngresado} es tipo {type(passwordIngresado)}")
+
+print(f"{'CÓDIGO':<10} | {'PRODUCTO':<15}") # Encabezado
+print("-" * 30)
+
+for i, codigo in enumerate(codigos):
+    # Reservamos 10 espacios para el código y 15 para el producto
+    print(f"{codigo:<10} | {productos[i]:<15}")
+
+    ====================================================================
+  GUÍA RÁPIDA: ¿CUÁNDO INICIALIZAR VARIABLES EN PYTHON?
+====================================================================
+
+PREGUNTA CLAVE:
+¿Para calcular el valor nuevo necesito saber qué tenía guardado antes?
+
+--------------------------------------------------------------------
+SÍ ➡️ SE INICIALIZA (Se pone ANTES del bucle o del while)
+--------------------------------------------------------------------
+1. CONTADORES / ACUMULADORES (Usa +=):
+   total = 0  <-- Si no arranca en 0, Python no sabe a qué sumarle.
+
+2. LISTAS VACÍAS (Usa .append()):
+   lista_limpia = []  <-- Tiene que existir antes de llenarla.
+
+3. CONTROL DEL MENU (Lectura previa):
+   opcion = 0  <-- Se inicializa porque el 'while opcion != 5'
+                   la lee antes de que el usuario tipee algo.
+
+4. BANDERAS / FLAGS (Para saber si algo pasó):
+   encontrado = 0  <-- Arranca en 0 (Falso) y cambia dentro del bucle.
+
+--------------------------------------------------------------------
+NO ➡️ NO SE INICIALIZA (Se crea DIRECTO donde se usa)
+--------------------------------------------------------------------
+* Variables temporales que nacen y mueren en la misma vuelta del bucle.
+* Su valor viejo no importa, se pisa por completo en cada vuelta.
+
+  Ejemplo:
+  for prod in productos:
+      nombre = prod[0]  # No hace falta declararla antes.
+
+
+
+ ====================================================================
+           MANUAL DE TRUCOS PRO DE FORMATEO EN PYTHON (TXT)
+====================================================================
+
+1. ALINEACIÓN Y ANCHOS FIJOS (El secreto de las columnas)
+--------------------------------------------------------------------
+Se usa adentro de las llaves del f-string con la estructura -> {variable:ancho}
+
+* Izquierda:  {prod:<15}  -> Alínea a la izquierda y rellena con espacios 
+                             hasta medir 15 caracteres.
+* Derecha:    {stock:>5}   -> Alínea a la derecha (ideal para números).
+* Centrado:   {texto:^20}  -> Centra el contenido en un bloque de 20.
+
+Ejemplo: print(f"| {prod:<15} | {stock:>5} |")
+
+
+2. EL TRUCO DEL NÚMERO ESTÉTICO (:02d)
+--------------------------------------------------------------------
+Ideal para IDs, rankings o listados tipo "01, 02, 03... 10".
+
+* Estructura: {variable:02d} -> El "2" es la cantidad de dígitos. 
+                                Si tiene un solo dígito, le clava un 0.
+
+Ejemplo: print(f"Item N° {i:02d}")  # Salida: Item N° 01
+
+
+3. MULTIPLICAR TEXTO (Separadores automáticos)
+--------------------------------------------------------------------
+En Python podés multiplicar caracteres para hacer las líneas del reporte
+de forma instantánea sin escribir código de más.
+
+Ejemplo: print("=" * 45)  # Dibuja una línea perfecta de 45 signos =
+
+
+4. SALTOS DE LÍNEA INTEGRADOS (\n)
+--------------------------------------------------------------------
+Para no usar un print("") vacío abajo de cada fila, meté un \n al final
+del texto adentro del mismo print.
+
+Ejemplo: print(f"Fruta: {fruta}\n") # Imprime y deja renglón libre abajo.
+
+
+5. ENUMERATE CON INICIO MANUAL (start=1)
+--------------------------------------------------------------------
+Por defecto enumerate() arranca a contar en 0. Para reportes de cara al 
+usuario, forzá a que arranque en 1.
+
+Ejemplo: for i, item in enumerate(lista, start=1):
+
+
+6. PARALELISMO DE DIFERENTE LARGO (zip_longest)
+--------------------------------------------------------------------
+Si cruzás dos listas (ej: válidos e inválidos) y miden distinto, usá 
+itertools.zip_longest para que no rompa el bucle.
+
+Ejemplo:
+from itertools import zip_longest
+for v, i in zip_longest(lista_v, lista_i, fillvalue=""):
+    print(f"{v:<20} | {i:<20}")
+====================================================================     
+
+====================================================================
+           TRUCOS PARA DISEÑO CON ESTILO BASE DE DATOS (SQL)
+====================================================================
+
+1. EL CORTE DE TUPLAS EN ENUMERATE
+--------------------------------------------------------------------
+Para poder acomodar los datos en columnas separadas, nunca dejes el
+enumerate() en una sola variable. Desempaquetalo al inicio del 'for'.
+
+* REGLA: for i, valor in enumerate(lista):
+  (La 'i' va a la columna de ID/Posición, el 'valor' a la de Datos).
+
+
+2. EL SECRETO DE LAS BARRA FIJAS (Los caños '|')
+--------------------------------------------------------------------
+Para que parezca una tabla real, los separadores '|' tienen que estar
+afuera de las variables de formato. Así, el formateador empuja el texto
+pero nunca desplaza los bordes de la celda.
+
+* ESTRUCTURA GANADORA:
+  print(f"| {i:02d} | {variable:<15} | {otra_var:<12} |")
+
+
+3. CÁLCULO DE ANCHOS (Para que las líneas coincidan)
+--------------------------------------------------------------------
+Para saber por cuánto tenés que multiplicar los signos "=" o "-" de los
+techos y pisos de la tabla, sumá los caracteres fijos + los anchos
+que declaraste en las variables.
+
+Tomando la estructura de arriba:
+  "| "         -> 2 caracteres
+  "{i:02d}"    -> 2 caracteres
+  " | "        -> 3 caracteres
+  "{var:<15}"  -> 15 caracteres
+  " | "        -> 3 caracteres
+  "{otra:<12}" -> 12 caracteres
+  " |"         -> 2 caracteres
+  ----------------------------
+  TOTAL ANCHO  = 39 caracteres -> Hacés: print("=" * 39)
+====================================================================
+import os
+import sqlite3
+
+# 1. Obtiene la carpeta exacta donde está guardado ESTE archivo de Python
+carpeta_proyecto = os.path.dirname(os.path.abspath(__file__))
+
+# 2. Une esa carpeta con el nombre de la base de datos
+ruta_bd = os.path.join(carpeta_proyecto, "productos_bd.db")
+
+# 3. Te conectas usando la ruta completa y exacta
+conexion = sqlite3.connect(ruta_bd)
+cursor = conexion.cursor()
+
+# ... (el resto de tu código de CREATE TABLE sigue igual abajo)
+
+================================================
+💡 TIPS DE TABULATE (El "Taburete")
+================================================
+Uso básico:
+from tabulate import tabulate
+print(tabulate(lista_de_datos, headers=titulos, tablefmt="grid"))
+
+--- SÚPER PODERES (Parámetros extra) ---
+
+1. FORMATOS DE EXPORTACIÓN (tablefmt="...")
+- "grid": El mejor para leer en consola.
+- "pipe": Formato Markdown (ideal para GitHub/Readme).
+- "html": Transforma la tabla en código <table> de HTML.
+- "jira": Formato listo para pegar en tickets de Jira.
+
+2. RELLENO DE DATOS FALTANTES (missingval="...")
+- Sirve para que la tabla no se rompa si hay campos vacíos.
+- Ejemplo: missingval="N/A" o missingval="-"
+
+3. REDONDEO DE DECIMALES (floatfmt="...")
+- Formatea todos los números flotantes de la tabla a la vez.
+- Ejemplo: floatfmt=".2f" (Deja todo prolijo con 2 decimales).
+
+4. ALINEACIÓN A MEDIDA (stralign="..." / numalign="...")
+- Fuerza la alineación de textos (str) o números (num).
+- Opciones: "left", "center", "right".
+- Ejemplo: stralign="center", numalign="center"
+================================================
+
+======================================================================
+content = """======================================================================
+📌 MIS TIPS DE PROGRAMACIÓN - PYTHON & SQLITE
+======================================================================
+
+1. EL "VOID" DE JAVA EN PYTHON (PRINT VS RETURN)
+----------------------------------------------------------------------
+• Si no ponés 'return', Python asume por defecto que la función NO
+  devuelve nada (devuelve 'None'). Es el equivalente al 'void' de Java.
+• Usa 'print' solo para mostrar cosas en la consola (Cocinero Egoísta).
+• Usa 'return' cuando necesitás que la función le entregue un dato
+  masticado al programa principal para guardarlo en una variable
+  o usarlo en otra parte (Cocinero Profesional).
+
+2. EL TRUCO DE RUTA PARA VS CODE (EVITAR DATABASES PERDIDAS)
+----------------------------------------------------------------------
+• VS Code crea los archivos donde tenés abierta la terminal, no donde
+  está el script. Para forzar que la base de datos se cree al lado
+  de tu archivo .py, usá la librería 'os':
+
+  import os
+  carpeta_del_script = os.path.dirname(os.path.abspath(__file__))
+  DB_NAME = os.path.join(carpeta_del_script, "inventario.db")
+
+3. REGLAS ESTRICTAS DE SQLITE
+----------------------------------------------------------------------
+• AUTOINCREMENT: El orden de las palabras es sagrado. Sí o sí debe ser:
+  "INTEGER PRIMARY KEY AUTOINCREMENT"
+• EXECUTEMANY: Para insertar muchos registros de un solo viaje, pasale
+  una lista de tuplas [(), (), ()] y usá 'cursor.executemany()'. El
+  'execute()' común es solo para UNA tupla.
+
+4. EL MISTERIO DEL "TABURETE" (TABULATE)
+----------------------------------------------------------------------
+• Tabulate lee matrices (listas dentro de listas).
+• Cada lista interna representa una FILA horizontal, no una columna.
+• Formato correcto para 1 fila con 3 columnas:
+  lista = [ ["Dato Col 1", "Dato Col 2", "Dato Col 3"] ]
+
+5. CORRECCIÓN DE REGEX (SYNTAXWARNING)
+----------------------------------------------------------------------
+• La letra 'r' (raw string) para expresiones regulares siempre debe ir
+  AFUERA de las comillas: r"^[0-9]+$"
+• Si la metés adentro, Python se confunde con las barras invertidas (\\).
+======================================================================"""
+
+file_path = "tips.txt"
+with open(file_path, "w", encoding="utf-8") as f:
+    f.write(content)
+
+print(f"File created successfully: {file_path}")
+
+
+tabulate
+pip install --upgrade tabulate   
+instalarlo en cada proyecto
+.\.venv\Scripts\python -m pip install tabulate
+para ver que mierda tenes instalado
+pip freeze > requirements.txt
+instalar desde archivo
+pip install -r requirements.txt
+forma de script
+´´´
+import subprocess
+import sys
+
+try:
+    from tabulate import tabulate
+    # Si pasa por acá, la librería ya estaba instalada
+except ImportError:
+    # Si tira error, te pregunta por consola
+    respuesta = input("Che, falta la librería 'tabulate'. ¿Querés que la instale ahora? (s/n): ")
+    
+    if respuesta.lower() == 's':
+        print("Instalando, bancame un toque...")
+        # Esto ejecuta el comando pip desde adentro de Python
+        subprocess.check_call([sys.executable, "-m", "pip", "install", "tabulate"])
+        from tabulate import tabulate
+        print("¡Listo el pollo! Instalada y cargada.")
+    else:
+        print("Ok, pero el programa puede explotar sin esa librería. ¡Avisado estás!")
+´´´
+de testing
+self.assertEqual(a, b)	assert a == b
+self.assertNotEqual(a, b)	assert a != b
+self.assertTrue(x)	assert x
+self.assertFalse(x)	assert not x
+self.assertIsNone(x)	assert x is None
+self.assertIsNotNone(x)	assert x is not None
+self.assertIn(a, b)	assert a in b
+import sys
+import os
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+import bd.database as db # ejemp
+
+¡Qué buena pregunta! Es un término súper común en el mundo de la programación y está buenísimo que te lo cruces ahora.
+
+En inglés, la palabra "chore" significa literalmente "quehacer" o "tarea rutinaria" (como lavar los platos o barrer la casa).
+
+En el contexto de Git, se usa como una etiqueta para clasificar el tipo de trabajo que hiciste en ese commit. Pertenece a una regla de la industria llamada Conventional Commits (Commits Convencionales).
+
+Cuando empezás tu mensaje con chore:, le estás avisando a los demás (y a tu yo del futuro) lo siguiente:
+
+"Este cambio es puro mantenimiento. No agregué ninguna función nueva al código, ni arreglé un bug, ni modifiqué los tests. Solo estuve limpiando la casa."
+
+Se usa típicamente para cosas como:
+
+Borrar archivos basura o temporales (como hicimos recién con los .zip).
+
+Modificar el .gitignore.
+
+Actualizar la versión de una librería.
+
+Cambiar configuraciones del editor de texto.
+
+🏷️ Otras etiquetas pro que vas a ver mucho:
+Para que te vayas familiarizando, estas son las etiquetas hermanas de chore que usan los equipos de desarrollo todos los días:
+
+feat: (Feature): Cuando agregás una característica nueva a tu programa. (Ej: feat: agregar validador de stock negativo).
+
+fix: (Fix): Cuando arreglás un error o un bug que rompía el código. (Ej: fix: corregir error al cargar base de datos).
+
+docs: (Documentation): Cuando solo modificás textos, como el README.md. (Ej: docs: agregar instrucciones de instalación).
+
+test: (Test): Cuando agregás o corregís tests de Pytest, sin tocar el código de la aplicación.
+
+Usar estas etiquetas hace que el historial de tu repositorio quede súper profesional y fácil de leer.
+
+¿Pudiste correr los tests y ver si pasó todo en verde o te quedó alguna duda con la limpieza del repo? 🧉🚀
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
