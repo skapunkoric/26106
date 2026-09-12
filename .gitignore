@@ -13,3 +13,6 @@ __pycache__/
 # Archivos ocultos de tu editor (PyCharm / Visual Studio Code)
 .idea/
 .vscode/
+
+# no copia txt
+*.txt
